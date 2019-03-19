@@ -10,14 +10,13 @@ namespace sm {
 class Event
 {
   public:
-    Event(const int event_id, const std::string & name);
+    Event(const std::string & name);
     virtual ~Event() = default;
 
-    int GetId() const;
+    virtual int GetId() const = 0;
     virtual std::string to_string() const;
 
   private:
-    const int m_event_id;
     const std::string m_name;
 
     Event(const Event &) = delete;
@@ -28,13 +27,28 @@ class Event
     
 };
 
-template <typename DATA_T>
-class EventWithData : public Event
+template <int EVENT_ID>
+class EventBase
 {
   public:
-    EventWithData(const int event_id, const std::string & name);
-    EventWithData(const int event_id, const std::string & name, const DATA_T & data);
-    virtual ~EventWithData() = default;
+    EventBase(const std::string & name) : Event(name) {};
+    virtual ~EventBase() = default;
+    virtual int GetId() const;
+};
+
+template <int EVENT_ID>
+int EventBase<EVENT_ID>::GetId() const
+{
+  return EVENT_ID;
+}
+
+template <int EVENT_ID, typename DATA_T>
+class EventBaseWithData<EVENT_ID, DATA_T> : public EventBase<EVENT_ID>
+{
+  public:
+    EventBaseWithData(const std::string & name);
+    EventBaseWithData(const std::string & name, const DATA_T & data);
+    virtual ~EventBaseWithData() = default;
 
     virtual void SetData(const DATA_T & data);
     virtual DATA_T & GetData() const;
@@ -44,31 +58,29 @@ class EventWithData : public Event
 
 };
 
-template <typename DATA_T>
-EventWithData<DATA_T>::EventWithData(const int event_id, 
-                                     const std::string & name, 
-                                     const DATA_T & data) :
-  Event(event_id, name),
+template <int EVENT_ID, typename DATA_T>
+EventBaseWithData<EVENT_ID, DATA_T>::EventBaseWithData(const std::string & name, 
+                                               const DATA_T & data) :
+  EventBase<EVENT_ID>(name),
   m_data(data)
 {
 }
 
-template <typename DATA_T>
-EventWithData<DATA_T>::EventWithData(const int event_id, 
-                                     const std::string & name)
-  Event(event_id, name),
-  m_data()
+template <int EVENT_ID, typename DATA_T>
+EventBaseWithData<EVENT_ID, DATA_T>::EventBaseWithData(const std::string & name)
+  EventBase<EVENT_ID>(name),
+  m_data(DATA_T())
 {
 }
 
-template <typename DATA_T>
-const DATA_T & EventWithData<DATA_T>::GetData() const
+template <int EVENT_ID, typename DATA_T>
+const DATA_T & EventBaseWithData<EVENT_ID, DATA_T>::GetData() const
 {
   return m_data;
 }
 
-template <typename DATA_T>
-void EventWithData<DATA_T>::SetData(const DATA_T & data) const
+template <int EVENT_ID, typename DATA_T>
+void EventBaseWithData<EVENT_ID, DATA_T>::SetData(const DATA_T & data) const
 {
   m_data = data;
 }

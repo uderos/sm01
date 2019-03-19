@@ -8,7 +8,7 @@ namespace udr {
 namespace sm {
 namespace filter_rm {
 
-enum eEventId 
+enum /*class*/ eEventId 
 {
   EVENT_TEXT,
   EVENT_CPP,
@@ -20,27 +20,28 @@ enum eEventId
 };
 
 
-#define CREATE_EVENT_NO_DATA(NAME)                                      \
-class Event#NAME : public Event                                         \
+#define CREATE_EVENT_NO_DATA(EVENT_ID)                                  \
+class Event#EVENT_ID : public EventBase<(EVENT_ID)>                     \
 {                                                                       \
-  Event#NAME() :                                                        \
-    FilterSMEventBase(eEventId::EVENT_#NAME, "Event#NAME") {}           \
+  public:                                                               \
+    Event#EVENT_ID() : EventBase<(EVENT_ID)>() {}                       \
 };
 
-#define CREATE_EVENT_WITH_DATA(NAME, DATA_TYPE)                         \
-class Event#NAME : public EventWithData<DATA_TYPE>                      \
-{                                                                       \
-  Event#NAME(const FilterSMEventBase::data_t & data) :                  \
-    FilterSMEventBase(eEventId::EVENT_#NAME, "Event#NAME", data) {}     \
+#define CREATE_EVENT_WITH_DATA(EVENT_ID, DATA_TYPE)                       \
+class Event#EVENT_ID : public EventBaseWithData<(EVENT_ID), std::string>  \
+{                                                                         \
+  public:                                                                 \
+    Event#EVENT_ID(const DATA_TYPE & data) :                              \
+      EventBaseWithData<(EVENT_ID), DATA_TYPE>(data) {}                   \
 };
 
-CREATE_EVENT_WITH_DATA(EVENT_TEXT, std::string);
-CREATE_EVENT_NO_DATA(EVENT_CPP);
-CREATE_EVENT_NO_DATA(EVENT_AR);
-CREATE_EVENT_NO_DATA(EVENT_CPP_NAME_TAG);
-CREATE_EVENT_NO_DATA(EVENT_AR_NAME_TAG);
-CREATE_EVENT_NO_DATA(EVENT_EOL);
-CREATE_EVENT_NO_DATA(EVENT_EOF);
+CREATE_EVENT_WITH_DATA(eEventId::EVENT_TEXT, std::string);
+CREATE_EVENT_NO_DATA(eEventId::EVENT_CPP);
+CREATE_EVENT_NO_DATA(eEventId::EVENT_AR);
+CREATE_EVENT_NO_DATA(eEventId::EVENT_CPP_NAME_TAG);
+CREATE_EVENT_NO_DATA(eEventId::EVENT_AR_NAME_TAG);
+CREATE_EVENT_NO_DATA(eEventId::EVENT_EOL);
+CREATE_EVENT_NO_DATA(eEventId::EVENT_EOF);
 
 
 }; // namespace filter_rm

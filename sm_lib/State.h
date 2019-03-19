@@ -35,18 +35,10 @@ class State
 
     State & operator=(const State &) = delete;
     State & operator=(State &&) = delete;
-    
-    virtual StatePtr m_process_event(const Event & event) = 0;
 };
 
 using StatePtr = std::unique_ptr<State>;
 
-#define CRETE_STATE(NAME)                                 \
-class State#NAME : public State                           \
-{                                                         \
-  State#NAME() : State(NAME) {}                           \
-  virtual StatePtr m_process_event(const Event & event);  \
-};
 
 } // namespace sm
 } // namespace udr

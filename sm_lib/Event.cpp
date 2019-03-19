@@ -3,16 +3,9 @@
 namespace udr {
 namespace sm {
 
-Event::Event(const int event_id, 
-             const std::string & name) : 
-  m_event_id(event_id),
+Event::Event(const std::string & name) : 
   m_name(name)
 {
-}
-
-int Event::GetId() const
-{
-  return m_event_id;
 }
 
 bool Event::IsTerminal() const
