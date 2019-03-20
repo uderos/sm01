@@ -9,4 +9,5 @@ SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11")
 project (sm01)
 
 add_subdirectory (sm_lib)
-#add_subdirectory (sm_filter)
+add_subdirectory (sm_filter)
+

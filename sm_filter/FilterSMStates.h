@@ -7,14 +7,20 @@ namespace udr {
 namespace sm {
 namespace filter_rm {
 
+#define CREATE_STATE(NAME)                  \
+class NAME##State : public State             \
+{                                           \
+  public:                               \
+    NAME##State () : State(#NAME) {}      \
+};
 
-CRETE_STATE(WaitCmd);
-CRETE_STATE(WaitCppNameArg);
-CRETE_STATE(WaitArNameArg);
-CRETE_STATE(WaitFileName);
-CRETE_STATE(WaitEol);
-CRETE_STATE(TheEnd);
 
+CREATE_STATE(WaitCmd);
+CREATE_STATE(WaitCppNameArg);
+CREATE_STATE(WaitArNameArg);
+CREATE_STATE(WaitFileName);
+CREATE_STATE(WaitEol);
+CREATE_STATE(TheEnd);
 
 } // namespace filter_sm
 } // namespace sm

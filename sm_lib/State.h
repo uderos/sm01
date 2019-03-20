@@ -47,11 +47,12 @@ class State
 };
 
 
-#define CREATE_STATE(NAME)                  \
-class State#NAME : public State             \
-{                                           \
-  public State#NAME() : State(NAME) {}      \
-}
+//  #define CREATE_STATE(NAME)                  \
+//  class #NAME : public State             \
+//  {                                           \
+//    public:                               \
+//      #NAME () : State("#NAME") {}      \
+//  };
 
 } // namespace sm
 } // namespace udr
