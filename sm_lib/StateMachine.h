@@ -13,7 +13,6 @@ class State; // forward declaration
 class StateMachine
 {
   public:
-    StateMachine(const std::string & name) = default;
     virtual ~StateMachine() = default;
 
     StatePtr ProcessEvent(const Event & event);
@@ -21,6 +20,10 @@ class StateMachine
     State & GetCurrentState() const;
 
     virtual std::string to_string() const;
+
+  protected:
+
+    StateMachine(const std::string & name, StatePtr intial_state);
 
   private:
 

@@ -43,7 +43,7 @@ int EventBase<EVENT_ID>::GetId() const
 }
 
 template <int EVENT_ID, typename DATA_T>
-class EventBaseWithData<EVENT_ID, DATA_T> : public EventBase<EVENT_ID>
+class EventBaseWithData : public EventBase<EVENT_ID>
 {
   public:
     EventBaseWithData(const std::string & name);
@@ -51,7 +51,7 @@ class EventBaseWithData<EVENT_ID, DATA_T> : public EventBase<EVENT_ID>
     virtual ~EventBaseWithData() = default;
 
     virtual void SetData(const DATA_T & data);
-    virtual DATA_T & GetData() const;
+    virtual const DATA_T & GetData() const;
 
   private:
     DATA_T m_data;
@@ -67,7 +67,7 @@ EventBaseWithData<EVENT_ID, DATA_T>::EventBaseWithData(const std::string & name,
 }
 
 template <int EVENT_ID, typename DATA_T>
-EventBaseWithData<EVENT_ID, DATA_T>::EventBaseWithData(const std::string & name)
+EventBaseWithData<EVENT_ID, DATA_T>::EventBaseWithData(const std::string & name) :
   EventBase<EVENT_ID>(name),
   m_data(DATA_T())
 {
@@ -80,7 +80,7 @@ const DATA_T & EventBaseWithData<EVENT_ID, DATA_T>::GetData() const
 }
 
 template <int EVENT_ID, typename DATA_T>
-void EventBaseWithData<EVENT_ID, DATA_T>::SetData(const DATA_T & data) const
+void EventBaseWithData<EVENT_ID, DATA_T>::SetData(const DATA_T & data)
 {
   m_data = data;
 }

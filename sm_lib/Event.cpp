@@ -8,11 +8,6 @@ Event::Event(const std::string & name) :
 {
 }
 
-bool Event::IsTerminal() const
-{
-  return false;
-}
-
 std::string Event::to_string() const
 {
   return std::string("EVENT_") + m_name;

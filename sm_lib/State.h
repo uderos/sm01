@@ -9,14 +9,20 @@
 namespace udr {
 namespace sm {
 
+class State;
+using StatePtr = std::unique_ptr<State>;
+
 class State
 {
   public:
 
     using event_handler_t = std::function<StatePtr(const Event &)>;
 
-    State(const std::string & name);
     virtual ~State() = default;
+
+    virtual void EnterState();
+
+    virtual void ExitState();
 
     virtual StatePtr ProcessEvent(const Event & event);
 
@@ -25,6 +31,9 @@ class State
     void RegisterEventHandler(const Event & event, event_handler_t handler);
 
     virtual std::string to_string() const;
+
+  protected:
+    State(const std::string & name);
 
   private:
     const std::string m_name;
@@ -37,8 +46,12 @@ class State
     State & operator=(State &&) = delete;
 };
 
-using StatePtr = std::unique_ptr<State>;
 
+#define CREATE_STATE(NAME)                  \
+class State#NAME : public State             \
+{                                           \
+  public State#NAME() : State(NAME) {}      \
+}
 
 } // namespace sm
 } // namespace udr

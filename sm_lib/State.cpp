@@ -1,3 +1,4 @@
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
 #include "State.h"
@@ -19,9 +20,21 @@ std::string State::to_string() const
   return m_name;
 }
 
+void State::EnterState()
+{
+  std::cout << "Entering state " << m_name << std::endl;
+}
+
+void State::ExitState()
+{
+  std::cout << "Exiting state " << m_name << std::endl;
+}
+
 StatePtr State::ProcessEvent(const Event & event)
 {
-  const auto p = m_event_haneler_map.find(event.GetId());
+  std::cout << "State_" << m_name << ": processing event " << event.to_string() << std::endl;
+
+  const auto p = m_event_handler_map.find(event.GetId());
 
   if (p == m_event_handler_map.end())
   {
@@ -37,7 +50,7 @@ StatePtr State::ProcessEvent(const Event & event)
 
 void State::RegisterEventHandler(const Event & event, event_handler_t handler)
 {
-  const auto p = m_event_haneler_map.find(event.GetId());
+  const auto p = m_event_handler_map.find(event.GetId());
 
   if (p != m_event_handler_map.end())
   {
@@ -48,7 +61,7 @@ void State::RegisterEventHandler(const Event & event, event_handler_t handler)
     throw std::runtime_error(oss.str());
   }
 
-  m_event_handler.insert(std::make_pair(event.GetId(), handler);
+  m_event_handler_map[event.GetId()] = handler;
 }
 
 

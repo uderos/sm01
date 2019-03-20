@@ -1,6 +1,10 @@
 
 #include "States.h"
 
+FilterSM::FilterSM() : StateMachine("MakeFilterSM", std::make_unique<StateWaitCmd>())
+{
+}
+
 StatePtr StateIdle::m_process_event(const Event & event)
 {
   switch (event.GetId())
