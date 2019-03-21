@@ -4,6 +4,8 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <set>
+#include <vector>
 #include "Event.h"
 
 namespace udr {
@@ -30,6 +32,8 @@ class State
 
     void RegisterEventHandler(const int event_id, event_handler_t handler);
 
+    void SetIgnoreEventList(const std::vector<int> & event_list);
+
     virtual std::string to_string() const;
 
   protected:
@@ -38,6 +42,7 @@ class State
   private:
     const std::string m_name;
     std::map<int, event_handler_t> m_event_handler_map;
+    std::set<int> m_ignore_event_list;
 
     State(const State &) = delete;
     State(State &&) = delete;
@@ -46,13 +51,6 @@ class State
     State & operator=(State &&) = delete;
 };
 
-
-//  #define CREATE_STATE(NAME)                  \
-//  class #NAME : public State             \
-//  {                                           \
-//    public:                               \
-//      #NAME () : State("#NAME") {}      \
-//  };
 
 } // namespace sm
 } // namespace udr

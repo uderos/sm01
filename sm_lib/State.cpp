@@ -34,6 +34,9 @@ StatePtr State::ProcessEvent(const Event & event)
 {
   std::cout << "State_" << m_name << ": processing event " << event.to_string() << std::endl;
 
+  if (m_ignore_event_list.find(event.GetId()) == m_ignore_event_list.end())
+    return StatePtr();
+
   const auto p = m_event_handler_map.find(event.GetId());
 
   if (p == m_event_handler_map.end())
@@ -61,6 +64,14 @@ void State::RegisterEventHandler(const int event_id, event_handler_t handler)
   }
 
   m_event_handler_map[event_id] = handler;
+}
+
+void State::SetIgnoreEventList(const std::vector<int> & event_list)
+{
+  m_ignore_event_list.clear();
+
+  for (const auto id : event_list)
+    m_ignore_event_list.insert(id);
 }
 
 
