@@ -1,5 +1,5 @@
-#ifndef UDR_SM_FILTER_STATES_H
-#define UDR_SM_FILTER_STATES_H
+#ifndef UDR_SM_FILTER_STATE_MACHINE_H
+#define UDR_SM_FILTER_STATE_MACHINE_H
 
 #include <sm_lib/StateMachine.h>
 #include "FilterSMEvents.h"
@@ -8,8 +8,6 @@
 namespace udr {
 namespace sm {
 namespace filter_rm {
-
-
 
 class FilterSM : public StateMachine
 {
@@ -21,11 +19,9 @@ class FilterSM : public StateMachine
 
 };
 
-
-
 } // namespace filter_sm
 } // namespace sm
 } // namespace udr
 
-#endif // UDR_SM_FILTER_STATES_H
+#endif // UDR_SM_FILTER_STATE_MACHINE_H
 

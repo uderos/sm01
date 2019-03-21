@@ -1,9 +1,16 @@
 #include "FilterSMStates.h"
 
+namespace udr {
+namespace sm {
+namespace filter_rm {
 
-
-bool StateTheEnd::IsTerminal() const
+DefaultState::DefaultState(const std::string & name) : udr::sm::State(name)
 {
-  return true;
+  ; // Install default event handler
 }
+
+
+} // namespace filter_sm
+} // namespace sm
+} // namespace udr
 

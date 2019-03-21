@@ -2,8 +2,8 @@
 #define UDR_SM_STATE_H
 
 #include <functional>
-#include <memory>
 #include <map>
+#include <memory>
 #include "Event.h"
 
 namespace udr {

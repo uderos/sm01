@@ -28,7 +28,7 @@ class Event
 };
 
 template <int EVENT_ID>
-class EventBase
+class EventBase : public Event
 {
   public:
     EventBase(const std::string & name) : Event(name) {};

@@ -1,28 +1,21 @@
+#include <memory>
+#include "FilterSM.h"
+#include "FilterSMEvents.h"
+#include "FilterSMStates.h"
 
-#include "States.h"
+namespace udr {
+namespace sm {
+namespace filter_rm {
 
-FilterSM::FilterSM() : StateMachine("MakeFilterSM", std::make_unique<StateWaitCmd>())
+
+FilterSM::FilterSM() : 
+  StateMachine("MakeFilterSM", 
+               std::make_unique<StateWaitCmd>())
 {
 }
 
-StatePtr StateIdle::m_process_event(const Event & event)
-{
-  switch (event.GetId())
-  {
-    case eEventId::EVENT_CPP:
-      return std::make_unique<StateWaitCppNameArg>();
-      break;
-    case EventId::EVENT_AR:
-      return std::make_unique<StateWaitArNameArg>();
-      break;
-    case EventId::EVENT_STR:
-      
-      break;
-  }
-}
 
-
-FilterSM::FilterSM() : StateMachine("FilterSM")
-{
-}
+} // namespace filter_sm
+} // namespace sm
+} // namespace udr
 

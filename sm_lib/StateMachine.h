@@ -3,12 +3,12 @@
 
 #include <memory>
 #include <string>
+#include "State.h"
 
 namespace udr {
 namespace sm {
 
 class Event; // forward declaration
-class State; // forward declaration
 
 class StateMachine
 {
