@@ -5,7 +5,7 @@
 
 namespace udr {
 namespace sm {
-namespace filter_rm {
+namespace filter_sm {
 
 
 
@@ -13,6 +13,10 @@ class DefaultState : public udr::sm::State
 {
   protected:
     DefaultState(const std::string & name);
+
+  private:
+//  udr::sm::State::event_handler_t m_EOF_handler;
+    udr::sm::StatePtr m_EOF_handler(const udr::sm::Event & event);
 };
 
 
@@ -32,15 +36,7 @@ class State##NAME : public DefaultState       \
 };
 
 
-//CREATE_STATE(WaitCmd);
-class StateWaitCmd : public DefaultState
-{
-  public:
-    StateWaitCmd() : DefaultState("WaitCmd") {}
-};
-
-
-
+CREATE_STATE(WaitCmd);
 CREATE_STATE(WaitCppNameArg);
 CREATE_STATE(WaitArNameArg);
 CREATE_STATE(WaitFileName);

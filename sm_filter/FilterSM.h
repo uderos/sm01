@@ -7,7 +7,7 @@
 
 namespace udr {
 namespace sm {
-namespace filter_rm {
+namespace filter_sm {
 
 class FilterSM : public StateMachine
 {

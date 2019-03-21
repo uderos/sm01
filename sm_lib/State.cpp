@@ -48,20 +48,19 @@ StatePtr State::ProcessEvent(const Event & event)
   return p->second(event);
 }
 
-void State::RegisterEventHandler(const Event & event, event_handler_t handler)
+void State::RegisterEventHandler(const int event_id, event_handler_t handler)
 {
-  const auto p = m_event_handler_map.find(event.GetId());
+  const auto p = m_event_handler_map.find(event_id);
 
   if (p != m_event_handler_map.end())
   {
     std::ostringstream oss;
     oss << "State " << m_name 
-        << ": Duplicated handler for event " << event.to_string() 
-        << " ID=" << event.GetId();
+        << ": Duplicated handler for event " << event_id;
     throw std::runtime_error(oss.str());
   }
 
-  m_event_handler_map[event.GetId()] = handler;
+  m_event_handler_map[event_id] = handler;
 }
 
 

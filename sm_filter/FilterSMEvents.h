@@ -6,7 +6,7 @@
 
 namespace udr {
 namespace sm {
-namespace filter_rm {
+namespace filter_sm {
 
 enum /*class*/ eEventId 
 {
@@ -21,18 +21,18 @@ enum /*class*/ eEventId
 
 
 #define CREATE_EVENT_NO_DATA(EVENT_ID)                                  \
-class Event##EVENT_ID : public udr::sm::EventBase<EVENT_ID>             \
+class Event_##EVENT_ID : public udr::sm::EventBase<EVENT_ID>             \
 {                                                                       \
   public:                                                               \
-    Event##EVENT_ID() : udr::sm::EventBase<EVENT_ID>(#EVENT_ID) {}               \
+    Event_##EVENT_ID() : udr::sm::EventBase<EVENT_ID>(#EVENT_ID) {}               \
 };
 
 #define CREATE_EVENT_WITH_DATA(EVENT_ID, DATA_TYPE)                       \
-class Event##EVENT_ID :                                                   \
+class Event_##EVENT_ID :                                                   \
   public udr::sm::EventBaseWithData<EVENT_ID, std::string>                \
 {                                                                         \
   public:                                                                 \
-    Event##EVENT_ID(const DATA_TYPE & data) :                             \
+    Event_##EVENT_ID(const DATA_TYPE & data) :                             \
       udr::sm::EventBaseWithData<EVENT_ID, DATA_TYPE>(#EVENT_ID, data) {}            \
 };
 
@@ -45,7 +45,7 @@ CREATE_EVENT_NO_DATA(EVENT_EOL);
 CREATE_EVENT_NO_DATA(EVENT_EOF);
 
 
-}; // namespace filter_rm
+}; // namespace filter_sm
 }; // namespace sm
 }; // namespace udr
 

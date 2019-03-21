@@ -28,7 +28,7 @@ class State
 
     virtual bool IsTerminal() const;
 
-    void RegisterEventHandler(const Event & event, event_handler_t handler);
+    void RegisterEventHandler(const int event_id, event_handler_t handler);
 
     virtual std::string to_string() const;
 

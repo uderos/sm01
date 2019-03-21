@@ -31,6 +31,9 @@ template <int EVENT_ID>
 class EventBase : public Event
 {
   public:
+
+    enum { ID = EVENT_ID };
+
     EventBase(const std::string & name) : Event(name) {};
     virtual ~EventBase() = default;
     virtual int GetId() const;
