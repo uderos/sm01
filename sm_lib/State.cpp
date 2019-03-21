@@ -22,19 +22,17 @@ std::string State::to_string() const
 
 void State::EnterState()
 {
-  std::cout << "Entering state " << m_name << std::endl;
 }
 
 void State::ExitState()
 {
-  std::cout << "Exiting state " << m_name << std::endl;
 }
 
 StatePtr State::ProcessEvent(const Event & event)
 {
-  std::cout << "State_" << m_name << ": processing event " << event.to_string() << std::endl;
+  std::cout << "[SMDBG]State_" << m_name << ": processing event " << event.to_string() << std::endl;
 
-  if (m_ignore_event_list.find(event.GetId()) == m_ignore_event_list.end())
+  if (m_ignore_event_list.find(event.GetId()) != m_ignore_event_list.end())
     return StatePtr();
 
   const auto p = m_event_handler_map.find(event.GetId());
@@ -42,13 +40,14 @@ StatePtr State::ProcessEvent(const Event & event)
   if (p == m_event_handler_map.end())
   {
     std::ostringstream oss;
-    oss << "State " << m_name 
+    oss << "[SMDBG]State " << m_name 
         << ": Un-handled event " << event.to_string() 
         << " ID=" << event.GetId();
     throw std::runtime_error(oss.str());
   }
 
-  return p->second(event);
+  StatePtr next_state = std::move(p->second(event));
+  return std::move(next_state);
 }
 
 void State::RegisterEventHandler(const int event_id, event_handler_t handler)
@@ -58,7 +57,7 @@ void State::RegisterEventHandler(const int event_id, event_handler_t handler)
   if (p != m_event_handler_map.end())
   {
     std::ostringstream oss;
-    oss << "State " << m_name 
+    oss << "[SMDBG]State " << m_name 
         << ": Duplicated handler for event " << event_id;
     throw std::runtime_error(oss.str());
   }

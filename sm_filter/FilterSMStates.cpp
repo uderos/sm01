@@ -33,7 +33,7 @@ StateWaitCmd::StateWaitCmd() : DefaultState("WaitCmd")
 {
   SetIgnoreEventList({eEventId::EVENT_CPP_NAME_TAG, eEventId::EVENT_CPP_NAME_TAG});
 
-  REGISTER_HANDLER(EVENT_TEXT, StateWaitCmd::m_CPP_handler);
+  REGISTER_HANDLER(EVENT_TEXT, StateWaitCmd::m_TEXT_handler);
   REGISTER_HANDLER(EVENT_CPP,  StateWaitCmd::m_CPP_handler);
   REGISTER_HANDLER(EVENT_AR,   StateWaitCmd::m_AR_handler);
   REGISTER_HANDLER(EVENT_EOL,  StateWaitCmd::m_EOL_handler);
@@ -50,11 +50,13 @@ udr::sm::StatePtr StateWaitCmd::m_TEXT_handler(const udr::sm::Event & event)
 
 udr::sm::StatePtr StateWaitCmd::m_CPP_handler(const udr::sm::Event & event)
 {
+  std::cout << "C++";
   STATE_TRANSITION(StateWaitCppNameTag);
 }
 
 udr::sm::StatePtr StateWaitCmd::m_AR_handler(const udr::sm::Event & event)
 {
+  std::cout << "AR";
   STATE_TRANSITION(StateWaitArNameTag);
 }
 
@@ -139,6 +141,7 @@ StateWaitEndOfLine::StateWaitEndOfLine() : DefaultState("WaitEndOfLine")
 
 udr::sm::StatePtr StateWaitEndOfLine::m_EOL_handler(const udr::sm::Event & event)
 {
+  std::cout << '\n';
   STATE_TRANSITION(StateWaitCmd);
 }
 

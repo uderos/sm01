@@ -7,14 +7,18 @@ namespace udr {
 namespace sm {
 namespace filter_sm {
 
-
+#define CONSTRUCTOR_DESTRUCTOR(CLASS) \
+  CLASS(); \
+  virtual ~ CLASS() = default
 
 //===========================================================================  
 
 class DefaultState : public udr::sm::State
 {
+
   protected:
     DefaultState(const std::string & name);
+    virtual ~DefaultState() = default;
 
   private:
     udr::sm::StatePtr m_EOF_handler(const udr::sm::Event & event);
@@ -26,7 +30,7 @@ class DefaultState : public udr::sm::State
 class StateWaitCmd : public DefaultState
 {
   public:
-    StateWaitCmd();
+    CONSTRUCTOR_DESTRUCTOR(StateWaitCmd);
 
   private:
     udr::sm::StatePtr m_TEXT_handler(const udr::sm::Event & event);
@@ -41,7 +45,7 @@ class StateWaitCmd : public DefaultState
 class StateWaitCppNameTag : public DefaultState
 {
   public:
-    StateWaitCppNameTag();
+    CONSTRUCTOR_DESTRUCTOR(StateWaitCppNameTag);
 
   private:
     udr::sm::StatePtr m_CPP_NAME_TAG_handler(const udr::sm::Event & event);
@@ -52,7 +56,7 @@ class StateWaitCppNameTag : public DefaultState
 class StateWaitArNameTag : public DefaultState
 {
   public:
-    StateWaitArNameTag();
+    CONSTRUCTOR_DESTRUCTOR(StateWaitArNameTag);
 
   private:
     udr::sm::StatePtr m_AR_NAME_TAG_handler(const udr::sm::Event & event);
@@ -63,7 +67,7 @@ class StateWaitArNameTag : public DefaultState
 class StateWaitFileName : public DefaultState
 {
   public:
-    StateWaitFileName();
+    CONSTRUCTOR_DESTRUCTOR(StateWaitFileName);
 
   private:
     udr::sm::StatePtr m_TEXT_handler(const udr::sm::Event & event);
@@ -74,7 +78,7 @@ class StateWaitFileName : public DefaultState
 class StateWaitEndOfLine : public DefaultState
 {
   public:
-    StateWaitEndOfLine();
+    CONSTRUCTOR_DESTRUCTOR(StateWaitEndOfLine);
 
   private:
     udr::sm::StatePtr m_EOL_handler(const udr::sm::Event & event);
@@ -85,7 +89,7 @@ class StateWaitEndOfLine : public DefaultState
 class StateTheEnd : public DefaultState
 {
   public:
-    StateTheEnd();
+    CONSTRUCTOR_DESTRUCTOR(StateTheEnd);
     virtual bool IsTerminal() const;
 };
 

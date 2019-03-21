@@ -37,6 +37,8 @@ class StateMachine
     StateMachine & operator=(StateMachine &&) = delete;
 
     void m_state_transition(StatePtr & next_state_ptr);
+    void m_enter_current_state() const;
+    void m_exit_current_state() const;
 };
 
 } // namespace sm

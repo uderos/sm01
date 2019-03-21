@@ -15,7 +15,15 @@ class FilterSM : public StateMachine
     FilterSM();
     virtual ~FilterSM() = default;
 
+    bool IsRunning() const;
+    void ProcessTextToken(const std::string & text_token);
+    void ProcessEndOfLine();
+    void ProcessEndOfFile();
+
   private:
+
+    using EventPtr = std::unique_ptr<udr::sm::Event>;
+    EventPtr m_create_event(const std::string & text_token) const;
 
 };
 

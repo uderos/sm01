@@ -25,6 +25,7 @@ class Event_##EVENT_ID : public udr::sm::EventBase<EVENT_ID>             \
 {                                                                       \
   public:                                                               \
     Event_##EVENT_ID() : udr::sm::EventBase<EVENT_ID>(#EVENT_ID) {}               \
+    virtual ~Event_##EVENT_ID() = default;                              \
 };
 
 #define CREATE_EVENT_WITH_DATA(EVENT_ID, DATA_TYPE)                       \
@@ -34,6 +35,7 @@ class Event_##EVENT_ID :                                                   \
   public:                                                                 \
     Event_##EVENT_ID(const DATA_TYPE & data) :                             \
       udr::sm::EventBaseWithData<EVENT_ID, DATA_TYPE>(#EVENT_ID, data) {}            \
+    virtual ~Event_##EVENT_ID() = default;                                \
 };
 
 CREATE_EVENT_WITH_DATA(EVENT_TEXT, std::string);

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdexcept>
 #include <sstream>
 
@@ -12,6 +13,7 @@ StateMachine::StateMachine(const std::string & name, StatePtr intial_state) :
   m_name(name),
   m_current_state_ptr(std::move(intial_state))
 {
+    m_enter_current_state();
 }
 
 State & StateMachine::GetCurrentState() const
@@ -36,16 +38,32 @@ StatePtr StateMachine::ProcessEvent(const Event & event)
 
   if (next_state_ptr)
   {
-    GetCurrentState().ExitState();
+    m_exit_current_state();
     m_state_transition(next_state_ptr);
-    GetCurrentState().EnterState();
+    m_enter_current_state();
   }
 }
 
 void StateMachine::m_state_transition(StatePtr & next_state_ptr)
 {
+  std::cout << "[SMDBG]State Transition: " 
+            << m_current_state_ptr->to_string() << " ==> "
+            << next_state_ptr->to_string()
+            << std::endl;
   m_current_state_ptr.reset();
   m_current_state_ptr.swap(next_state_ptr);
+}
+
+void StateMachine::m_enter_current_state() const
+{
+  std::cout << "[SMDBG]Entering state " << GetCurrentState().to_string() << std::endl;
+  GetCurrentState().EnterState();
+}
+
+void StateMachine::m_exit_current_state() const
+{
+  std::cout << "[SMDBG]Leaving state " << GetCurrentState().to_string() << std::endl;
+  GetCurrentState().ExitState();
 }
 
 } // namespace sm
