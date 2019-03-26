@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include "Event.h"
+#include "OutMgr.h"
 #include "State.h"
 #include "StateMachine.h"
 
@@ -46,7 +47,7 @@ StatePtr StateMachine::ProcessEvent(const Event & event)
 
 void StateMachine::m_state_transition(StatePtr & next_state_ptr)
 {
-  std::cout << "[SMDBG]State Transition: " 
+  g_DBGOUT << "[SMDBG]State Transition: " 
             << m_current_state_ptr->to_string() << " ==> "
             << next_state_ptr->to_string()
             << std::endl;
@@ -56,13 +57,13 @@ void StateMachine::m_state_transition(StatePtr & next_state_ptr)
 
 void StateMachine::m_enter_current_state() const
 {
-  std::cout << "[SMDBG]Entering state " << GetCurrentState().to_string() << std::endl;
+  g_DBGOUT << "[SMDBG]Entering state " << GetCurrentState().to_string() << std::endl;
   GetCurrentState().EnterState();
 }
 
 void StateMachine::m_exit_current_state() const
 {
-  std::cout << "[SMDBG]Leaving state " << GetCurrentState().to_string() << std::endl;
+  g_DBGOUT << "[SMDBG]Leaving state " << GetCurrentState().to_string() << std::endl;
   GetCurrentState().ExitState();
 }
 

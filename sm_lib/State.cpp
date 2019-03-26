@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include "OutMgr.h"
 #include "State.h"
 
 namespace udr {
@@ -30,7 +31,7 @@ void State::ExitState()
 
 StatePtr State::ProcessEvent(const Event & event)
 {
-  std::cout << "[SMDBG]State_" << m_name << ": processing event " << event.to_string() << std::endl;
+  g_DBGOUT << "[SMDBG]State_" << m_name << ": processing event " << event.to_string() << std::endl;
 
   if (m_ignore_event_list.find(event.GetId()) != m_ignore_event_list.end())
     return StatePtr();
@@ -46,8 +47,8 @@ StatePtr State::ProcessEvent(const Event & event)
     throw std::runtime_error(oss.str());
   }
 
-  StatePtr next_state = std::move(p->second(event));
-  return std::move(next_state);
+  // Call the event handler and return the next state
+  return p->second(event);
 }
 
 void State::RegisterEventHandler(const int event_id, event_handler_t handler)

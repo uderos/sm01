@@ -12,7 +12,7 @@ namespace filter_sm {
   RegisterEventHandler(eEventId :: EVENT, \
                        std::bind(& HANDLER, this, std::placeholders::_1));
 
-#define STATE_TRANSITION(NEXT_STATE)  { return std::move(std::make_unique< NEXT_STATE >()); }
+#define STATE_TRANSITION(NEXT_STATE)  { return std::make_unique< NEXT_STATE >(); }
 #define NO_STATE_TRANSITION  { return udr::sm::StatePtr(); }
 
 //===========================================================================  

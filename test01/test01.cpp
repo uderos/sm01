@@ -2,11 +2,39 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 
 #include "sm_filter/FilterSM.h"
 
 using namespace udr::sm;
 using namespace udr::sm::filter_sm;
+
+static void f_test04()
+{
+  std::cout << "test04 - BEGIN" << std::endl;
+
+  std::vector<std::string> text {
+    "First Line eol1",
+    "g++ xx xx -o file1.o yy yy eol2",
+    "Third Line eol3",
+    "g++ xx xx eol4",
+    "yy yy -o file2 ww ww eol5",
+    "Sixth Line eol6"
+  };
+
+  FilterSM sm;
+
+  for (const std::string & line : text)
+  {
+    std::istringstream iss(line);
+
+    std::string token;
+    while (iss >> token)
+      sm.ProcessTextToken(token);
+  }
+
+  std::cout << "test04 - END" << std::endl;
+}
 
 static void f_test03()
 {
@@ -69,16 +97,6 @@ static void f_test01()
 {
   std::cout << "test01 - BEGIN" << std::endl;
 
-
-  {
-    Event_EVENT_CPP e;
-    StateWaitCmd s;
-  }
-
-  {
-    FilterSM sm;
-    std::cout << "sm: " << sm.to_string() << std::endl;
-  }
 
   std::cout << "test01 - END" << std::endl;
 }
