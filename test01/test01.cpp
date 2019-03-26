@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <vector>
 
+#include "sm_lib/OutMgr.h"
 #include "sm_filter/FilterSM.h"
 
 using namespace udr::sm;
@@ -12,6 +13,10 @@ using namespace udr::sm::filter_sm;
 static void f_test04()
 {
   std::cout << "test04 - BEGIN" << std::endl;
+
+  std::ofstream dbgfile("/tmp/smdbg.txt");
+  OutMgr::Instance().SetDebugStreams({&dbgfile});
+  OutMgr::Instance().SetStdoutStreams({&std::cout, &dbgfile});
 
   std::vector<std::string> text {
     "First Line eol1",
@@ -31,8 +36,10 @@ static void f_test04()
     std::string token;
     while (iss >> token)
       sm.ProcessTextToken(token);
+    sm.ProcessTextToken("\n");
   }
 
+  OutMgr::Instance().Reset();
   std::cout << "test04 - END" << std::endl;
 }
 
@@ -108,7 +115,8 @@ int main()
   {
     //f_test01();
     //f_test02();
-    f_test03();
+    //f_test03();
+    f_test04();
   }
   catch (const std::exception & e)
   {

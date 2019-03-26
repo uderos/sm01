@@ -23,6 +23,7 @@ bool FilterSM::IsRunning() const
 void FilterSM::ProcessTextToken(const std::string & text_token)
 {
   EventPtr event_ptr = m_create_event(text_token);
+
   ProcessEvent(* event_ptr);
 }
 
@@ -40,7 +41,7 @@ void FilterSM::ProcessEndOfFile()
 
 FilterSM::EventPtr FilterSM::m_create_event(const std::string & text_token) const
 {
-  if (text_token == "g++")
+  if ((text_token == "g++") || (text_token == "c++"))
     return std::make_unique<Event_EVENT_CPP>();
 
   if (text_token == "ar")
@@ -51,6 +52,9 @@ FilterSM::EventPtr FilterSM::m_create_event(const std::string & text_token) cons
 
   if (text_token == "-cr")
     return std::make_unique<Event_EVENT_AR_NAME_TAG>();
+    
+  if (text_token == "\n")
+    return std::make_unique<Event_EVENT_EOL>();
     
   return std::make_unique<Event_EVENT_TEXT>(text_token);
 }

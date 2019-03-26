@@ -53,6 +53,12 @@ void OutMgr::SetDebugStreams(const local::ostream_ptr_list_t & streams)
   m_debug_stream_ptr->SetOutStreams(streams);
 }
 
+void OutMgr::Reset()
+{
+  m_stdout_stream_ptr->SetOutStreams({});
+  m_debug_stream_ptr->SetOutStreams({});
+}
+
 local::outstream & OutMgr::StdOut()
 {
   return (*m_stdout_stream_ptr.get());

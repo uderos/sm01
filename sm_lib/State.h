@@ -20,7 +20,7 @@ class State
 
     using event_handler_t = std::function<StatePtr(const Event &)>;
 
-    virtual ~State() = default;
+    virtual ~State();
 
     virtual void EnterState();
 

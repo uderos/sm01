@@ -12,4 +12,5 @@ project (sm01)
 add_subdirectory (sm_lib)
 add_subdirectory (sm_filter)
 add_subdirectory (test01)
+add_subdirectory (test02)
 

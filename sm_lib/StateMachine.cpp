@@ -33,7 +33,7 @@ std::string StateMachine::to_string() const
   return oss.str();
 }
 
-StatePtr StateMachine::ProcessEvent(const Event & event)
+void StateMachine::ProcessEvent(const Event & event)
 {
   StatePtr next_state_ptr = GetCurrentState().ProcessEvent(event);
 

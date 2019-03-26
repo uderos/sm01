@@ -43,20 +43,20 @@ udr::sm::StatePtr StateWaitCmd::m_TEXT_handler(const udr::sm::Event & event)
 {
   const auto & e = dynamic_cast<const Event_EVENT_TEXT &>(event);
 
-  std::cout << e.GetData();
+  std::cout << e.GetData() << ' ';
 
   NO_STATE_TRANSITION;
 }
 
 udr::sm::StatePtr StateWaitCmd::m_CPP_handler(const udr::sm::Event & event)
 {
-  std::cout << "C++";
+  std::cout << "C++ ";
   STATE_TRANSITION(StateWaitCppNameTag);
 }
 
 udr::sm::StatePtr StateWaitCmd::m_AR_handler(const udr::sm::Event & event)
 {
-  std::cout << "AR";
+  std::cout << "AR ";
   STATE_TRANSITION(StateWaitArNameTag);
 }
 
@@ -121,7 +121,7 @@ udr::sm::StatePtr StateWaitFileName::m_TEXT_handler(const udr::sm::Event & event
 {
   const auto & e = dynamic_cast<const Event_EVENT_TEXT &>(event);
 
-  std::cout << e.GetData();
+  std::cout << e.GetData() << ' ';
 
   STATE_TRANSITION(StateWaitEndOfLine);
 }

@@ -11,6 +11,10 @@ State::State(const std::string & name) : m_name(name)
 {
 }
 
+State::~State()
+{
+}
+
 bool State::IsTerminal() const
 {
   return false;

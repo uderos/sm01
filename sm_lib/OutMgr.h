@@ -58,6 +58,8 @@ class OutMgr
     void SetStdoutStreams(const local::ostream_ptr_list_t & streams);
     void SetDebugStreams(const local::ostream_ptr_list_t & streams);
 
+    void Reset();
+
     static OutMgr & Instance();
 
   private:

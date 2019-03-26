@@ -15,7 +15,7 @@ class StateMachine
   public:
     virtual ~StateMachine() = default;
 
-    StatePtr ProcessEvent(const Event & event);
+    void ProcessEvent(const Event & event);
 
     State & GetCurrentState() const;
 
