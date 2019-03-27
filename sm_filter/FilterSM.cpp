@@ -47,6 +47,9 @@ FilterSM::EventPtr FilterSM::m_create_event(const std::string & text_token) cons
   if (text_token == "ar")
     return std::make_unique<Event_EVENT_AR>();
 
+  if (text_token == "/usr/bin/ld:")
+    return std::make_unique<Event_EVENT_LD_WARN>();
+
   if (text_token == "-o")
     return std::make_unique<Event_EVENT_CPP_NAME_TAG>();
 

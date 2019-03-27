@@ -33,10 +33,11 @@ StateWaitCmd::StateWaitCmd() : DefaultState("WaitCmd")
 {
   SetIgnoreEventList({eEventId::EVENT_CPP_NAME_TAG, eEventId::EVENT_CPP_NAME_TAG});
 
-  REGISTER_HANDLER(EVENT_TEXT, StateWaitCmd::m_TEXT_handler);
-  REGISTER_HANDLER(EVENT_CPP,  StateWaitCmd::m_CPP_handler);
-  REGISTER_HANDLER(EVENT_AR,   StateWaitCmd::m_AR_handler);
-  REGISTER_HANDLER(EVENT_EOL,  StateWaitCmd::m_EOL_handler);
+  REGISTER_HANDLER(EVENT_TEXT,      StateWaitCmd::m_TEXT_handler);
+  REGISTER_HANDLER(EVENT_CPP,       StateWaitCmd::m_CPP_handler);
+  REGISTER_HANDLER(EVENT_AR,        StateWaitCmd::m_AR_handler);
+  REGISTER_HANDLER(EVENT_LD_WARN,   StateWaitCmd::m_LD_WARN_handler);
+  REGISTER_HANDLER(EVENT_EOL,       StateWaitCmd::m_EOL_handler);
 }
 
 udr::sm::StatePtr StateWaitCmd::m_TEXT_handler(const udr::sm::Event & event)
@@ -60,6 +61,11 @@ udr::sm::StatePtr StateWaitCmd::m_AR_handler(const udr::sm::Event & event)
   STATE_TRANSITION(StateWaitArNameTag);
 }
 
+udr::sm::StatePtr StateWaitCmd::m_LD_WARN_handler(const udr::sm::Event & event)
+{
+  STATE_TRANSITION(StateWaitEndOfLine);
+}
+
 udr::sm::StatePtr StateWaitCmd::m_EOL_handler(const udr::sm::Event & event)
 {
   std::cout << std::endl;
@@ -75,6 +81,7 @@ StateWaitCppNameTag::StateWaitCppNameTag() : DefaultState("WaitCppNameTag")
   SetIgnoreEventList( { eEventId::EVENT_TEXT, 
                         eEventId::EVENT_CPP, 
                         eEventId::EVENT_AR, 
+                        eEventId::EVENT_LD_WARN, 
                         eEventId::EVENT_AR_NAME_TAG, 
                         eEventId::EVENT_EOL });
 
@@ -93,6 +100,7 @@ StateWaitArNameTag::StateWaitArNameTag() : DefaultState("WaitArNameTag")
   SetIgnoreEventList( { eEventId::EVENT_TEXT, 
                         eEventId::EVENT_CPP, 
                         eEventId::EVENT_AR, 
+                        eEventId::EVENT_LD_WARN, 
                         eEventId::EVENT_CPP_NAME_TAG, 
                         eEventId::EVENT_EOL });
 
@@ -110,6 +118,7 @@ StateWaitFileName::StateWaitFileName() : DefaultState("WaitFileName")
 {
   SetIgnoreEventList( { eEventId::EVENT_CPP, 
                         eEventId::EVENT_AR, 
+                        eEventId::EVENT_LD_WARN, 
                         eEventId::EVENT_CPP_NAME_TAG, 
                         eEventId::EVENT_AR_NAME_TAG, 
                         eEventId::EVENT_EOL });
@@ -133,6 +142,7 @@ StateWaitEndOfLine::StateWaitEndOfLine() : DefaultState("WaitEndOfLine")
   SetIgnoreEventList( { eEventId::EVENT_TEXT, 
                         eEventId::EVENT_CPP, 
                         eEventId::EVENT_AR, 
+                        eEventId::EVENT_LD_WARN, 
                         eEventId::EVENT_CPP_NAME_TAG, 
                         eEventId::EVENT_AR_NAME_TAG });
 
@@ -152,6 +162,7 @@ StateTheEnd::StateTheEnd() : DefaultState("TheEnd")
   SetIgnoreEventList( { eEventId::EVENT_TEXT, 
                         eEventId::EVENT_CPP, 
                         eEventId::EVENT_AR, 
+                        eEventId::EVENT_LD_WARN, 
                         eEventId::EVENT_CPP_NAME_TAG, 
                         eEventId::EVENT_AR_NAME_TAG,
                         eEventId::EVENT_EOL });

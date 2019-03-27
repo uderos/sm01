@@ -36,6 +36,7 @@ class StateWaitCmd : public DefaultState
     udr::sm::StatePtr m_TEXT_handler(const udr::sm::Event & event);
     udr::sm::StatePtr m_CPP_handler(const udr::sm::Event & event);
     udr::sm::StatePtr m_AR_handler(const udr::sm::Event & event);
+    udr::sm::StatePtr m_LD_WARN_handler(const udr::sm::Event & event);
     udr::sm::StatePtr m_EOL_handler(const udr::sm::Event & event);
 };
 
