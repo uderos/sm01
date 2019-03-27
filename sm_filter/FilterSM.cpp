@@ -24,6 +24,11 @@ void FilterSM::ProcessTextToken(const std::string & text_token)
 {
   EventPtr event_ptr = m_create_event(text_token);
 
+//std::cout << "UBEDEBUG"
+//          << " TOKEN=<" << text_token << ">"
+//          << " EVENT=<" << event_ptr->to_string() << ">"
+//          << std::endl;
+
   ProcessEvent(* event_ptr);
 }
 

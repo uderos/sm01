@@ -63,7 +63,7 @@ udr::sm::StatePtr StateWaitCmd::m_AR_handler(const udr::sm::Event & event)
 
 udr::sm::StatePtr StateWaitCmd::m_LD_WARN_handler(const udr::sm::Event & event)
 {
-  STATE_TRANSITION(StateWaitEndOfLine);
+  STATE_TRANSITION(StateDropLine);
 }
 
 udr::sm::StatePtr StateWaitCmd::m_EOL_handler(const udr::sm::Event & event)
@@ -152,6 +152,25 @@ StateWaitEndOfLine::StateWaitEndOfLine() : DefaultState("WaitEndOfLine")
 udr::sm::StatePtr StateWaitEndOfLine::m_EOL_handler(const udr::sm::Event & event)
 {
   std::cout << '\n';
+  STATE_TRANSITION(StateWaitCmd);
+}
+
+//===========================================================================  
+
+StateDropLine::StateDropLine() : DefaultState("DropLine")
+{
+  SetIgnoreEventList( { eEventId::EVENT_TEXT, 
+                        eEventId::EVENT_CPP, 
+                        eEventId::EVENT_AR, 
+                        eEventId::EVENT_LD_WARN, 
+                        eEventId::EVENT_CPP_NAME_TAG, 
+                        eEventId::EVENT_AR_NAME_TAG });
+
+  REGISTER_HANDLER(EVENT_EOL,  StateDropLine::m_EOL_handler);
+}
+
+udr::sm::StatePtr StateDropLine::m_EOL_handler(const udr::sm::Event & event)
+{
   STATE_TRANSITION(StateWaitCmd);
 }
 

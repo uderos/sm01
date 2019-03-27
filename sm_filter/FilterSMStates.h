@@ -87,6 +87,17 @@ class StateWaitEndOfLine : public DefaultState
 
 //===========================================================================  
 
+class StateDropLine : public DefaultState
+{
+  public:
+    CONSTRUCTOR_DESTRUCTOR(StateDropLine);
+
+  private:
+    udr::sm::StatePtr m_EOL_handler(const udr::sm::Event & event);
+};
+
+//===========================================================================  
+
 class StateTheEnd : public DefaultState
 {
   public:

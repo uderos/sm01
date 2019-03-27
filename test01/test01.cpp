@@ -10,6 +10,40 @@
 using namespace udr::sm;
 using namespace udr::sm::filter_sm;
 
+static void f_test05()
+{
+  std::cout << "test05 - BEGIN" << std::endl;
+
+  std::ofstream dbgfile("/tmp/smdbg.txt");
+  OutMgr::Instance().SetDebugStreams({&dbgfile});
+  OutMgr::Instance().SetStdoutStreams({&std::cout, &dbgfile});
+
+  std::vector<std::string> text {
+    "g++ xx xx -o file1 yy",
+    "g++ xx xx -o file2 yy",
+    "/usr/bin/ld: warning: libcrypto.so.10, needed by such-and-such, may conflict with so-and-so",
+    "g++ xx xx -o file3 yy",
+    "g++ xx xx -o file4 yy",
+    "g++ xx xx -o file5 yy",
+    "/usr/bin/ld: warning: libcrypto.so.10, needed by such-and-such, may conflict with so-and-so",
+  };
+
+  FilterSM sm;
+
+  for (const std::string & line : text)
+  {
+    std::istringstream iss(line);
+
+    std::string token;
+    while (iss >> token)
+      sm.ProcessTextToken(token);
+    sm.ProcessTextToken("\n");
+  }
+
+  OutMgr::Instance().Reset();
+  std::cout << "test05 - END" << std::endl;
+}
+
 static void f_test04()
 {
   std::cout << "test04 - BEGIN" << std::endl;
@@ -117,6 +151,7 @@ int main()
     //f_test02();
     //f_test03();
     f_test04();
+    f_test05();
   }
   catch (const std::exception & e)
   {
